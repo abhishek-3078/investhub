@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
+// import 
+
 
 const StartupDetailsForm = () => {
+  const [loading,setLoading]=useState(false);
   const [formData, setFormData] = useState({
     location: "",
     mobile: "",
@@ -39,15 +43,32 @@ const StartupDetailsForm = () => {
 
   const handleFileChange = (e, section, key) => {
     const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      [section]: { ...formData[section], [key]: file },
-    });
+    // setFormData({
+    //   ...formData,
+    //   [section]: { ...formData[section], [key]: file },
+    // });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    try{
+  const token = localStorage.getItem("token"); // Retrieve token from local storage
+
+  const response = await axios.post(
+    "http://localhost:5000/details/startup",
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add the auth header
+        "Content-Type": "application/json", // Ensure proper content type
+      },
+    }
+  );
+      console.log(response);
+    }catch(e){
+      console.log(e);
+    }
   };
 
   return (
@@ -167,7 +188,7 @@ const StartupDetailsForm = () => {
               accept="image/*"
               onChange={(e) => handleFileChange(e, role, "photo")}
               className="w-full p-2 mb-2 bg-gray-700 rounded-md"
-              required
+             
             />
           </div>
         ))}
@@ -176,11 +197,11 @@ const StartupDetailsForm = () => {
         <input
           type="file"
           accept="application/pdf"
-          onChange={(e) =>
-            setFormData({ ...formData, pitchDeck: e.target.files[0] })
+          onChange={(e) =>console.log()
+            // setFormData({ ...formData, pitchDeck: e.target.files[0] })
           }
           className="w-full p-2 mb-4 bg-gray-700 rounded-md"
-          required
+          
         />
 
         <button
