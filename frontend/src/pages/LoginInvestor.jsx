@@ -24,7 +24,7 @@ const LoginInvestor = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-800">
-      <div className="bg-gray-600 p-8 rounded-lg shadow-lg w-96">
+      <div className="bg-gray-200 p-8 rounded-lg shadow-lg w-96">  
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Investor Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

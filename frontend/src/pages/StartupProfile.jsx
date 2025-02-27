@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Assuming you're using React Router
+import { useParams, useNavigate } from 'react-router-dom'; // Assuming you're using React Router
 import {
   ArrowLeftIcon,
   EnvelopeIcon,
@@ -21,6 +21,8 @@ export default function StartupDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [startupData, setStartupData] = useState(null);
+
+  const navigate = useNavigate();
 
   // Simulate dynamic data fetching (replace with your actual API call)
   useEffect(() => {
@@ -127,6 +129,15 @@ export default function StartupDetails() {
         Back
       </motion.button>
 
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => navigate("/startup-details-form")}
+        className="fixed top-4 right-4 z-50 flex items-center text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md"
+      >
+        Edit Profile
+      </motion.button>
+
       {/* Header Section */}
       <motion.section
         initial={{ opacity: 0, y: -20 }}
@@ -135,7 +146,9 @@ export default function StartupDetails() {
         className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 py-20"
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white">{startupData.name}</h1>
+          <h1 className="text-5xl md:text-7xl font-bold text-white">
+            {startupData.name}
+          </h1>
           <div className="mt-4 flex items-center justify-center space-x-6">
             <span className="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-lg">
               {startupData.industry}
@@ -146,8 +159,8 @@ export default function StartupDetails() {
             </span>
           </div>
           <div className="mt-8">
-            <button 
-              onClick={scrollToContact}  // Scroll to the Contact Details section
+            <button
+              onClick={scrollToContact} // Scroll to the Contact Details section
               className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 inline-flex items-center"
             >
               <EnvelopeIcon className="w-5 h-5 mr-2" />
@@ -218,7 +231,10 @@ export default function StartupDetails() {
         >
           <h2 className="text-3xl font-bold mb-6">Growth Metrics</h2>
           <div className="h-64">
-            <Bar data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+            <Bar
+              data={chartData}
+              options={{ responsive: true, maintainAspectRatio: false }}
+            />
           </div>
         </motion.div>
 
@@ -245,7 +261,9 @@ export default function StartupDetails() {
                 <div>
                   <h3 className="text-xl font-semibold">{member.name}</h3>
                   <p className="text-blue-600 mb-1">{member.role}</p>
-                  <p className="text-gray-600 dark:text-gray-300">{member.bio}</p>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {member.bio}
+                  </p>
                 </div>
               </motion.div>
             ))}

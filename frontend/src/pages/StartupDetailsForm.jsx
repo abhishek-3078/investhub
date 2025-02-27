@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const StartupForm = () => {
+const StartupDetailsForm = () => {
   const [formData, setFormData] = useState({
     location: "",
     mobile: "",
@@ -194,4 +194,4 @@ const StartupForm = () => {
   );
 };
 
-export default StartupForm;
+export default StartupDetailsForm;

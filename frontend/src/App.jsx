@@ -8,6 +8,7 @@ import InvestorProfile from "./pages/InvestorProfile";
 import ChatPage from "./pages/ChatPage";
 import LandingPage from "./pages/LandingPage";import StartupSearch from "./pages/StartupSearch";
 import InvestorSearch from "./pages/InvestorSearch";
+import StartupDetailsForm from "./pages/StartupDetailsForm";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login/investor" element={<LoginInvestor />} />
        <Route path='/startup-search' element={<StartupSearch />} />
        <Route path='/investor-search' element={<InvestorSearch />} />
+       <Route path='/startup-details-form' element={<StartupDetailsForm />} />
       </Routes>
     </Router>
   );

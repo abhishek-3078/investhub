@@ -42,6 +42,9 @@ const StartupSearch = () => {
   const [filterFundingStage, setFilterFundingStage] = useState("");
   const [filterBusinessModel, setFilterBusinessModel] = useState("");
   const [sortKey, setSortKey] = useState("");
+  const [startups, setStartups] = useState([]);
+
+  
 
   const filteredStartups = startups
     .filter(
