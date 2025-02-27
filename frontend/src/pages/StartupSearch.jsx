@@ -1,75 +1,65 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+
+const startups = [
+  {
+    id: 1,
+    name: "Startup One",
+    founder: "Alice Johnson",
+    industry: "Tech",
+    location: "San Francisco",
+    funding: 500000,
+    fundingStage: "Seed",
+    businessModel: "B2B",
+    image: "https://via.placeholder.com/100",
+  },
+  {
+    id: 2,
+    name: "Startup Two",
+    founder: "Bob Smith",
+    industry: "Health",
+    location: "New York",
+    funding: 1000000,
+    fundingStage: "Series A",
+    businessModel: "B2C",
+    image: "https://via.placeholder.com/100",
+  },
+  {
+    id: 3,
+    name: "Startup Three",
+    founder: "Charlie Davis",
+    industry: "Finance",
+    location: "Chicago",
+    funding: 750000,
+    fundingStage: "Series B",
+    businessModel: "D2C",
+    image: "https://via.placeholder.com/100",
+  },
+];
 
 const StartupSearch = () => {
-  // State for dynamic startups data, filters, and sort
-  const [startups, setStartups] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterIndustry, setFilterIndustry] = useState("");
   const [filterFundingStage, setFilterFundingStage] = useState("");
   const [filterBusinessModel, setFilterBusinessModel] = useState("");
   const [sortKey, setSortKey] = useState("");
 
-  // Simulate API call to fetch startups
-  useEffect(() => {
-    // Replace the below simulated data with your API call
-    setTimeout(() => {
-      const data = [
-        {
-          id: 1,
-          name: "Startup One",
-          founder: "Alice Johnson",
-          industry: "Tech",
-          location: "San Francisco",
-          funding: 500000,
-          fundingStage: "Seed",
-          businessModel: "B2B",
-          image: "https://via.placeholder.com/100",
-        },
-        {
-          id: 2,
-          name: "Startup Two",
-          founder: "Bob Smith",
-          industry: "Health",
-          location: "New York",
-          funding: 1000000,
-          fundingStage: "Series A",
-          businessModel: "B2C",
-          image: "https://via.placeholder.com/100",
-        },
-        {
-          id: 3,
-          name: "Startup Three",
-          founder: "Charlie Davis",
-          industry: "Finance",
-          location: "Chicago",
-          funding: 750000,
-          fundingStage: "Series B",
-          businessModel: "D2C",
-          image: "https://via.placeholder.com/100",
-        },
-      ];
-      setStartups(data);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  // Filter and sort startups
   const filteredStartups = startups
-    .filter((startup) => {
-      return (
+    .filter(
+      (startup) =>
         startup.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (filterIndustry ? startup.industry === filterIndustry : true) &&
-        (filterFundingStage ? startup.fundingStage === filterFundingStage : true) &&
-        (filterBusinessModel ? startup.businessModel === filterBusinessModel : true)
-      );
-    })
+        (filterFundingStage
+          ? startup.fundingStage === filterFundingStage
+          : true) &&
+        (filterBusinessModel
+          ? startup.businessModel === filterBusinessModel
+          : true)
+    )
     .sort((a, b) => {
       if (sortKey === "name") {
-        return a.name.localeCompare(b.name);
+        return a?.name.localeCompare(b?.name);
       } else if (sortKey === "funding") {
-        return b.funding - a.funding;
+        return b?.funding - a?.funding;
       }
       return 0;
     });
@@ -136,51 +126,49 @@ const StartupSearch = () => {
           </select>
         </div>
 
-        {/* Startup Cards */}
-        <div className="w-full md:w-3/4 p-4">
-          <h1 className="text-2xl font-semibold mb-4 text-white">Startup Listings</h1>
-          <div className="grid gap-4">
-            {filteredStartups.length > 0 ? (
-              filteredStartups.map((startup) => (
-                <motion.div
-                  key={startup.id}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-md"
-                >
-                  <img
-                    src={startup.image}
-                    alt={startup.name}
-                    className="w-16 h-16 object-cover rounded-md mr-3"
-                  />
-                  <div>
-                    <h2 className="text-lg font-semibold text-blue-400">
-                      {startup.name}
-                    </h2>
-                    <p className="text-gray-400 text-sm">
-                      Founder: {startup.founder}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      Funding: ${startup.funding.toLocaleString()}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      Industry: {startup.industry}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      Location: {startup.location}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      Funding Stage: {startup.fundingStage}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      Business Model: {startup.businessModel}
-                    </p>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <p className="text-center text-gray-500">No startups found.</p>
-            )}
-          </div>
+      {/* Startup Cards */}
+      <div className="w-3/4 p-4">
+        <h1 className="text-2xl font-semibold mb-4">Startup Listings</h1>
+        <div className="grid gap-4">
+          {filteredStartups.length > 0 ? (
+            filteredStartups.map((startup) => (
+              <div
+                key={startup.id}
+                className="flex items-center p-3 border border-gray-700 rounded-lg bg-gray-800 shadow-sm"
+              >
+                <img
+                  src={startup.image}
+                  alt={startup.name}
+                  className="w-16 h-16 object-cover rounded-md mr-3"
+                />
+                <div>
+                  <h2 className="text-lg font-semibold text-blue-400">
+                    {startup.name}
+                  </h2>
+                  <p className="text-gray-400 text-sm">
+                    Founder: {startup.founder}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Funding: ${startup.funding.toLocaleString()}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Industry: {startup.industry}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Location: {startup.location}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Funding Stage: {startup.fundingStage}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    Business Model: {startup.businessModel}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No startups found.</p>
+          )}
         </div>
       </div>
     </div>
