@@ -12,5 +12,6 @@ app.use(express.json());
 // Routes
 // app.use("/api", routes);
 app.use("/api/", require("./routes/authRoutes"));
+app.use('/details/', require('./routes/user.route'));
 
 module.exports = app; // Export the app (without starting the server)
