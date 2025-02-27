@@ -28,15 +28,14 @@ const InvestorSearch = () => {
   const [filterFocus, setFilterFocus] = useState("");
   const [filterStage, setFilterStage] = useState("");
   const [sortKey, setSortKey] = useState("");
+  const [selectedInvestor, setSelectedInvestor] = useState(null);
 
   const filteredInvestors = investors
     .filter(
       (investor) =>
         investor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (filterFocus ? investor.investmentFocus === filterFocus : true) &&
-        (filterStage
-          ? investor.fundingStagePreferred.includes(filterStage)
-          : true)
+        (filterStage ? investor.fundingStagePreferred.includes(filterStage) : true)
     )
     .sort((a, b) => {
       if (sortKey === "name") {
@@ -48,16 +47,16 @@ const InvestorSearch = () => {
     });
 
   return (
-    <div className="flex bg-gray-900 text-white min-h-screen w-full px-8">
+    <div className="flex bg-gray-900 text-white min-h-screen w-screen px-8">
       {/* Sidebar Filters */}
-      <div className="w-1/4 p-6 bg-gray-800 min-h-screen rounded-lg">
+      <div className="w-1/4 p-6 bg-gray-800 min-h-screen rounded-lg shadow-lg transition-transform duration-300">
         <h2 className="text-xl font-bold mb-4">Filters</h2>
         <input
           type="text"
           placeholder="Search by name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border border-gray-700 bg-gray-900 rounded-md mb-4"
+          className="w-full p-2 border border-gray-700 bg-gray-900 rounded-md mb-4 focus:ring focus:ring-blue-500"
         />
         <select
           onChange={(e) => setFilterFocus(e.target.value)}
@@ -92,13 +91,14 @@ const InvestorSearch = () => {
 
       {/* Investor Cards */}
       <div className="w-3/4 p-6">
-        <h1 className="text-3xl font-bold mb-6">Investor Listings</h1>
-        <div className="grid gap-6">
+        <h1 className="text-3xl font-bold mb-6 text-blue-400">Investor Listings</h1>
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           {filteredInvestors.length > 0 ? (
             filteredInvestors.map((investor) => (
               <div
                 key={investor.id}
-                className="flex items-center p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-md"
+                className="flex items-center p-4 border border-gray-700 rounded-lg bg-gray-800 shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer"
+                onClick={() => setSelectedInvestor(investor)}
               >
                 <img
                   src={investor.image}
@@ -106,27 +106,20 @@ const InvestorSearch = () => {
                   className="w-24 h-24 object-cover rounded-md mr-4"
                 />
                 <div>
-                  <h2 className="text-xl font-bold text-blue-400">
-                    {investor.name}
-                  </h2>
-                  <p className="text-gray-400 font-semibold">
-                    Firm: {investor.firm}
-                  </p>
+                  <h2 className="text-xl font-bold text-blue-400">{investor.name}</h2>
+                  <p className="text-gray-400 font-semibold">Firm: {investor.firm}</p>
                   <p className="text-gray-400 font-semibold">
                     Ticket Size: ${investor.ticketSize.toLocaleString()}
                   </p>
+                  <p className="text-gray-400">Focus: {investor.investmentFocus}</p>
                   <p className="text-gray-400">
-                    Focus: {investor.investmentFocus}
-                  </p>
-                  <p className="text-gray-400">
-                    Preferred Stages:{" "}
-                    {investor.fundingStagePreferred.join(", ")}
+                    Preferred Stages: {investor.fundingStagePreferred.join(", ")}
                   </p>
                   <a
                     href={investor.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500"
+                    className="text-blue-500 hover:underline"
                   >
                     LinkedIn Profile
                   </a>

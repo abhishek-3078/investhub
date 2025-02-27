@@ -15,6 +15,7 @@ const LoginStartup = () => {
     try {
       const res = await axios.post("http://localhost:5000/api/login/startup", formData);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("expiryDate", Date.now() + 3600000*24);
       alert("Login Successful");
       navigate("/startup-profile"); 
     } catch (error) {

@@ -15,6 +15,7 @@ const LoginInvestor = () => {
     try {
       const res = await axios.post("http://localhost:5000/api/login/investor", formData);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("expiryDate", Date.now() + 3600000*24);
       alert("Login Successful");
       navigate("/investor-profile");
     } catch (error) {

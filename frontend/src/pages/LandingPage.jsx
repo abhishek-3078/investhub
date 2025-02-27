@@ -5,7 +5,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LandingPage() {
   // Simulated authentication flag (set to false to force login redirection)
-  const isLoggedIn = false;
+  
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const parsedToken = JSON.parse(atob(token.split(".")[1]));
+          return parsedToken.exp * 1000 >= Date.now();
+        } catch (error) {
+          return false;
+        }
+      }
+      return false;
+    });
   const navigate = useNavigate();
 
   // Helper function to handle navigation based on destination key
@@ -35,19 +47,19 @@ export default function LandingPage() {
       // User is logged in
       switch (destination) {
         case 'startup':
-          navigate('/profile/startup');
+          navigate('/startup-profile');
           break;
         case 'investor':
-          navigate('/profile/investor');
+          navigate('/investor-profile');
           break;
         case 'startup-list':
-          navigate('/startups-list');
+          navigate('/startup-search');
           break;
         case 'investor-list':
-          navigate('/investors-list');
+          navigate('/investor-search');
           break;
         case 'getStarted':
-          navigate('/startups-list');
+          navigate('/startup-search');
           break;
         default:
           navigate(destination);
@@ -142,18 +154,6 @@ export default function LandingPage() {
                 className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 Find Startup
-              </button>
-              <button 
-                onClick={() => handleNavigation('/testimonials')}
-                className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
-              >
-                Testimonials
-              </button>
-              <button 
-                onClick={() => handleNavigation('getStarted')}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
-              >
-                Get Started
               </button>
             </div>
             {/* Mobile Menu Button */}

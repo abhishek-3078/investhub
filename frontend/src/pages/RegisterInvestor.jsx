@@ -25,8 +25,9 @@ const RegisterInvestor = () => {
         interestedIndustries: formData.interestedIndustries.split(","),
       });
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("expiryDate", Date.now() + 3600000*24);
       alert("Registered Successfully");
-      navigate("/");
+      navigate("/investor-profile");
     } catch (error) {
       alert(error.response?.data?.message || "Registration Failed");
     }

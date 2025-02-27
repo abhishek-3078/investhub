@@ -12,6 +12,7 @@ import {
 import { motion } from 'framer-motion';
 
 export default function InvestorProfile() {
+
   const investorData = {
     name: "Jane Doe",
     netWorth: "$50B",
