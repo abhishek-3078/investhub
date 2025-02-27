@@ -9,6 +9,7 @@ import ChatPage from "./pages/ChatPage";
 import LandingPage from "./pages/LandingPage";import StartupSearch from "./pages/StartupSearch";
 import InvestorSearch from "./pages/InvestorSearch";
 import StartupDetailsForm from "./pages/StartupDetailsForm";
+import InvestorDetailsForm from "./pages/InvestorDetailsForm";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
        <Route path='/startup-search' element={<StartupSearch />} />
        <Route path='/investor-search' element={<InvestorSearch />} />
        <Route path='/startup-details-form' element={<StartupDetailsForm />} />
+       <Route path="/investor-details-form" element={<InvestorDetailsForm />} />
       </Routes>
     </Router>
   );
