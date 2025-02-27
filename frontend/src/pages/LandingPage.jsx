@@ -41,13 +41,10 @@ export default function LandingPage() {
           navigate('/profile/investor');
           break;
         case 'startup-list':
-          navigate('/startups-list');
+          navigate('/startups-search');
           break;
         case 'investor-list':
-          navigate('/investors-list');
-          break;
-        case 'getStarted':
-          navigate('/startups-list');
+          navigate('/investors-search');
           break;
         default:
           navigate(destination);
@@ -148,12 +145,6 @@ export default function LandingPage() {
                 className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
               >
                 Testimonials
-              </button>
-              <button 
-                onClick={() => handleNavigation('getStarted')}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
-              >
-                Get Started
               </button>
             </div>
             {/* Mobile Menu Button */}

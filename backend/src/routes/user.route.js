@@ -4,7 +4,6 @@ const router= require('express').Router();
 const Investor= require('../models/investor.model');
 const Startup= require('../models/startup.model');
 const authMiddleware= require('../middleware/auth.middleware');
-const { default: InvestorProfile } = require('../../../frontend/src/pages/InvestorProfile');
 
 router.get('/all-startups',async(req,res)=>{
   try{

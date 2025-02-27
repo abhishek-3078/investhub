@@ -1,68 +1,53 @@
-import React, { useState } from "react";
-
-const startups = [
-  {
-    id: 1,
-    name: "Startup One",
-    founder: "Alice Johnson",
-    industry: "Tech",
-    location: "San Francisco",
-    funding: 500000,
-    fundingStage: "Seed",
-    businessModel: "B2B",
-    image: "https://via.placeholder.com/100",
-  },
-  {
-    id: 2,
-    name: "Startup Two",
-    founder: "Bob Smith",
-    industry: "Health",
-    location: "New York",
-    funding: 1000000,
-    fundingStage: "Series A",
-    businessModel: "B2C",
-    image: "https://via.placeholder.com/100",
-  },
-  {
-    id: 3,
-    name: "Startup Three",
-    founder: "Charlie Davis",
-    industry: "Finance",
-    location: "Chicago",
-    funding: 750000,
-    fundingStage: "Series B",
-    businessModel: "D2C",
-    image: "https://via.placeholder.com/100",
-  },
-];
+import React, { useState, useEffect } from "react";
 
 const StartupSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterIndustry, setFilterIndustry] = useState("");
   const [filterFundingStage, setFilterFundingStage] = useState("");
   const [filterBusinessModel, setFilterBusinessModel] = useState("");
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
   const [sortKey, setSortKey] = useState("");
   const [startups, setStartups] = useState([]);
 
-  
+  useEffect(() => {
+    const fetchStartups = async () => {
+      try {
+        console.log("hello there")
+        const response = await fetch("http://localhost:5000/details/all-startups"); // Replace with actual API
+        if (!response.ok) {
+          throw new Error("Failed to fetch startups");
+        }
+        const data = await response.json();
+        console.log(data);
+        setStartups(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStartups();
+  }, []);
 
   const filteredStartups = startups
     .filter(
       (startup) =>
-        startup.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (filterIndustry ? startup.industry === filterIndustry : true) &&
+        startup?.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (filterIndustry ? startup?.industry === filterIndustry : true) &&
         (filterFundingStage
-          ? startup.fundingStage === filterFundingStage
+          ? startup?.fundingStage === filterFundingStage
           : true) &&
         (filterBusinessModel
-          ? startup.businessModel === filterBusinessModel
+          ? startup?.businessModel === filterBusinessModel
           : true)
     )
     .sort((a, b) => {
       if (sortKey === "name") {
-        return a.name.localeCompare(b.name);
+        return a?.name.localeCompare(b?.name);
       } else if (sortKey === "funding") {
-        return b.funding - a.funding;
+        return b?.funding - a?.funding;
       }
       return 0;
     });
@@ -127,35 +112,35 @@ const StartupSearch = () => {
           {filteredStartups.length > 0 ? (
             filteredStartups.map((startup) => (
               <div
-                key={startup.id}
+                key={startup?.id}
                 className="flex items-center p-3 border border-gray-700 rounded-lg bg-gray-800 shadow-sm"
               >
                 <img
-                  src={startup.image}
-                  alt={startup.name}
+                  src={startup?.image}
+                  alt={startup?.name}
                   className="w-16 h-16 object-cover rounded-md mr-3"
                 />
                 <div>
                   <h2 className="text-lg font-semibold text-blue-400">
-                    {startup.name}
+                    {startup?.name}
                   </h2>
                   <p className="text-gray-400 text-sm">
-                    Founder: {startup.founder}
+                    Founder: {startup?.founder}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Funding: ${startup.funding.toLocaleString()}
+                    Funding: ${startup?.funding?.toLocaleString()}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Industry: {startup.industry}
+                    Industry: {startup?.industry}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Location: {startup.location}
+                    Location: {startup?.location}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Funding Stage: {startup.fundingStage}
+                    Funding Stage: {startup?.fundingStage}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Business Model: {startup.businessModel}
+                    Business Model: {startup?.businessModel}
                   </p>
                 </div>
               </div>
