@@ -70,9 +70,9 @@ export default function LandingPage() {
           setTimeout(() => {
             resolve({
               images: [
-                "https://source.unsplash.com/1600x900/?business,finance",
-                "https://source.unsplash.com/1600x900/?technology,startup",
-                "https://source.unsplash.com/1600x900/?investment,money"
+                "https://wallpapercave.com/wp/wp3987074.jpg",
+                "https://wallpapercave.com/wp/wp3987074.jpg",
+                "https://wallpapercave.com/wp/wp3987074.jpg"
               ],
               features: [
                 { title: "Smart Matching", desc: "AI-powered investor-startup matching based on industry, stage, and business model" },
