@@ -16,7 +16,7 @@ const LoginInvestor = () => {
       const res = await axios.post("http://localhost:5000/api/login/investor", formData);
       localStorage.setItem("token", res.data.token);
       alert("Login Successful");
-      navigate("/");
+      navigate("/investor-profile");
     } catch (error) {
       alert(error.response?.data?.message || "Login Failed");
     }

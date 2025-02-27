@@ -6,7 +6,10 @@ import {
   EnvelopeIcon,
   TrophyIcon,
   LinkIcon,
+  MapPinIcon,
+  PhoneIcon,
 } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
 
 export default function InvestorProfile() {
   const investorData = {
@@ -42,164 +45,173 @@ export default function InvestorProfile() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-              {investorData.name}
-            </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">{investorData.bio}</p>
-          </div>
-          <div className="mt-4 md:mt-0 flex space-x-6">
+    <div className="w-screen min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Hero Header */}
+      <div className="relative bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-800 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h1
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r text-white  drop-shadow-xl"
+          >
+            {investorData.name}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-4 text-xl sm:text-2xl text-blue-100 max-w-2xl mx-auto italic"
+          >
+            {investorData.bio}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-6 flex items-center justify-center space-x-6"
+          >
             <div className="flex items-center space-x-1">
-              <CurrencyDollarIcon className="h-6 w-6 text-blue-600" />
-              <span className="text-lg font-medium text-gray-800 dark:text-gray-200">
-                {investorData.netWorth}
-              </span>
+              <CurrencyDollarIcon className="h-6 w-6 text-white" />
+              <span className="text-lg font-medium text-white">{investorData.netWorth}</span>
             </div>
             <div className="flex items-center space-x-1">
-              <BuildingOffice2Icon className="h-6 w-6 text-blue-600" />
-              <span className="text-lg font-medium text-gray-800 dark:text-gray-200">
-                {investorData.founderOf}
-              </span>
+              <BuildingOffice2Icon className="h-6 w-6 text-white" />
+              <span className="text-lg font-medium text-white">{investorData.founderOf}</span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        {/* Investments Portfolio Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Investments Portfolio
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {investorData.investments.map((startup, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center p-4 border rounded-xl hover:shadow-2xl transition-shadow dark:border-gray-700 dark:bg-gray-700"
+              >
+                <ClipboardDocumentListIcon className="h-8 w-8 text-blue-600" />
+                <span className="mt-2 text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  {startup.name}
+                </span>
+                <p className="text-gray-600 dark:text-gray-300 text-sm text-center">
+                  {startup.description}
+                </p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">Year: {startup.year}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Investment Strategy Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Investment Strategy
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">{investorData.investmentStrategy}</p>
+        </div>
+
+        {/* Recent Investments Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Recent Investments
+          </h2>
+          <div className="space-y-4">
+            {investorData.recentInvestments.map((investment, index) => (
+              <div
+                key={index}
+                className="p-4 border rounded-xl hover:shadow-2xl transition-shadow dark:border-gray-700 dark:bg-gray-700"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
+                  {investment.name}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  {investment.description}
+                </p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">
+                  Date: {investment.date}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Social & Online Presence Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Social & Online Presence
+          </h2>
+          <div className="flex flex-col sm:flex-row sm:space-x-8 space-y-4 sm:space-y-0">
+            <div className="flex items-center space-x-2">
+              <LinkIcon className="h-6 w-6 text-blue-600" />
+              <a
+                href={investorData.social.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                Website
+              </a>
+            </div>
+            <div className="flex items-center space-x-2">
+              <LinkIcon className="h-6 w-6 text-blue-600" />
+              <a
+                href={investorData.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                Twitter
+              </a>
+            </div>
+            <div className="flex items-center space-x-2">
+              <LinkIcon className="h-6 w-6 text-blue-600" />
+              <a
+                href={investorData.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Investments Portfolio Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Investments Portfolio
-        </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {investorData.investments.map((startup, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center p-4 border rounded-lg hover:shadow-lg transition-shadow dark:border-gray-700 dark:bg-gray-700"
-            >
-              <ClipboardDocumentListIcon className="h-6 w-6 text-blue-600" />
-              <span className="mt-2 text-gray-800 dark:text-gray-200 font-medium">
-                {startup.name}
-              </span>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                {startup.description}
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 text-xs">Year: {startup.year}</p>
+        {/* Achievements Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Notable Achievements
+          </h2>
+          <ul className="space-y-2">
+            {investorData.achievements.map((achievement, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <TrophyIcon className="h-6 w-6 text-blue-600" />
+                <span className="text-gray-800 dark:text-gray-200">{achievement}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Contact Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Get in Touch
+          </h2>
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center space-x-2">
+              <EnvelopeIcon className="h-6 w-6 text-blue-600" />
+              <span className="text-gray-800 dark:text-gray-200">{investorData.contact.email}</span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Investment Strategy Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Investment Strategy
-        </h2>
-        <p className="text-gray-600 dark:text-gray-300">{investorData.investmentStrategy}</p>
-      </div>
-
-      {/* Recent Investments Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Recent Investments
-        </h2>
-        <div className="space-y-4">
-          {investorData.recentInvestments.map((investment, index) => (
-            <div
-              key={index}
-              className="p-4 border rounded-lg hover:shadow-lg transition-shadow dark:border-gray-700 dark:bg-gray-700"
-            >
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                {investment.name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                {investment.description}
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 text-xs">
-                Date: {investment.date}
-              </p>
+            <div className="flex items-center space-x-2">
+              <PhoneIcon className="h-6 w-6 text-blue-600" />
+              <span className="text-gray-800 dark:text-gray-200">{investorData.contact.phone}</span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Social & Online Presence Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Social & Online Presence
-        </h2>
-        <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-4 sm:space-y-0">
-          <div className="flex items-center space-x-2">
-            <LinkIcon className="h-6 w-6 text-blue-600" />
-            <a
-              href={investorData.social.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              Website
-            </a>
-          </div>
-          <div className="flex items-center space-x-2">
-            <LinkIcon className="h-6 w-6 text-blue-600" />
-            <a
-              href={investorData.social.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              Twitter
-            </a>
-          </div>
-          <div className="flex items-center space-x-2">
-            <LinkIcon className="h-6 w-6 text-blue-600" />
-            <a
-              href={investorData.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Achievements Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Notable Achievements
-        </h2>
-        <ul className="space-y-2">
-          {investorData.achievements.map((achievement, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <TrophyIcon className="h-6 w-6 text-blue-600" />
-              <span className="text-gray-800 dark:text-gray-200">{achievement}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Contact Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Get in Touch
-        </h2>
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center space-x-2">
-            <EnvelopeIcon className="h-6 w-6 text-blue-600" />
-            <span className="text-gray-800 dark:text-gray-200">
-              {investorData.contact.email}
-            </span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-800 dark:text-gray-200">Phone:</span>
-            <span className="text-gray-800 dark:text-gray-200">
-              {investorData.contact.phone}
-            </span>
           </div>
         </div>
       </div>

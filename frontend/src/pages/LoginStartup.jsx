@@ -16,7 +16,7 @@ const LoginStartup = () => {
       const res = await axios.post("http://localhost:5000/api/login/startup", formData);
       localStorage.setItem("token", res.data.token);
       alert("Login Successful");
-      navigate("/"); 
+      navigate("/startup-profile"); 
     } catch (error) {
       alert(error.response?.data?.message || "Login Failed");
     }

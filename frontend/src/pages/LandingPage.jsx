@@ -1,8 +1,60 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LandingPage() {
+  // Simulated authentication flag (set to false to force login redirection)
+  const isLoggedIn = false;
+  const navigate = useNavigate();
+
+  // Helper function to handle navigation based on destination key
+  const handleNavigation = (destination) => {
+    if (!isLoggedIn) {
+      // Not logged in
+      switch (destination) {
+        case 'startup':
+          navigate('/login/startup');
+          break;
+        case 'investor':
+          navigate('/login/investor');
+          break;
+        case 'startup-list':
+          navigate('/login/startup');
+          break;
+        case 'investor-list':
+          navigate('/login/investor');
+          break;
+        case 'getStarted':
+          navigate('/login');
+          break;
+        default:
+          navigate('/login');
+      }
+    } else {
+      // User is logged in
+      switch (destination) {
+        case 'startup':
+          navigate('/profile/startup');
+          break;
+        case 'investor':
+          navigate('/profile/investor');
+          break;
+        case 'startup-list':
+          navigate('/startups-list');
+          break;
+        case 'investor-list':
+          navigate('/investors-list');
+          break;
+        case 'getStarted':
+          navigate('/startups-list');
+          break;
+        default:
+          navigate(destination);
+      }
+    }
+  };
+
   // Dynamic data from backend simulation
   const [data, setData] = useState(null);
   // Toggle mobile menu
@@ -79,10 +131,28 @@ export default function LandingPage() {
             </div>
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200">Features</a>
-              <a href="#how" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200">How it works</a>
-              <a href="#testimonials" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200">Testimonials</a>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+              <button 
+                onClick={() => handleNavigation('investor-list')}
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
+              >
+                Find Investor
+              </button>
+              <button 
+                onClick={() => handleNavigation('startup-list')}
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
+              >
+                Find Startup
+              </button>
+              <button 
+                onClick={() => handleNavigation('/testimonials')}
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
+              >
+                Testimonials
+              </button>
+              <button 
+                onClick={() => handleNavigation('getStarted')}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              >
                 Get Started
               </button>
             </div>
@@ -109,10 +179,28 @@ export default function LandingPage() {
               className="md:hidden absolute w-full bg-white dark:bg-gray-800 border-b dark:border-gray-700 z-10"
             >
               <div className="px-6 py-6 flex flex-col space-y-4">
-                <a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200">Features</a>
-                <a href="#how" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200">How it works</a>
-                <a href="#testimonials" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200">Testimonials</a>
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                <button 
+                  onClick={() => handleNavigation('investor-list')}
+                  className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Find Investor
+                </button>
+                <button 
+                  onClick={() => handleNavigation('startup-list')}
+                  className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Find Startup
+                </button>
+                <button 
+                  onClick={() => handleNavigation('/testimonials')}
+                  className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Testimonials
+                </button>
+                <button 
+                  onClick={() => handleNavigation('getStarted')}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
                   Get Started
                 </button>
               </div>
@@ -148,10 +236,16 @@ export default function LandingPage() {
               Data-driven matchmaking platform for startups and investors
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-6">
-              <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105">
+              <button 
+                onClick={() => handleNavigation('startup')}
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105"
+              >
                 I'm a Startup
               </button>
-              <button className="bg-blue-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition transform hover:scale-105">
+              <button 
+                onClick={() => handleNavigation('investor')}
+                className="bg-blue-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition transform hover:scale-105"
+              >
                 I'm an Investor
               </button>
             </div>
@@ -245,7 +339,10 @@ export default function LandingPage() {
           <p className="text-xl text-blue-100 mb-10">
             Join hundreds of startups and investors already finding success on our platform
           </p>
-          <button className="bg-white dark:bg-gray-100 text-blue-600 dark:text-blue-600 px-10 py-4 rounded-lg font-semibold hover:bg-gray-200 transition transform hover:scale-105">
+          <button 
+            onClick={() => handleNavigation('getStarted')}
+            className="bg-white dark:bg-gray-100 text-blue-600 dark:text-blue-600 px-10 py-4 rounded-lg font-semibold hover:bg-gray-200 transition transform hover:scale-105"
+          >
             Get Started Now
           </button>
         </div>
@@ -262,23 +359,51 @@ export default function LandingPage() {
             <div>
               <h4 className="font-semibold mb-4">For Startups</h4>
               <ul className="space-y-3 text-gray-400 dark:text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Find Investors</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Pitch Deck Tools</a></li>
+                <li>
+                  <button onClick={() => handleNavigation('investor-list')} className="hover:text-white transition-colors duration-200">
+                    Find Investors
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleNavigation('/pitch-deck-tools')} className="hover:text-white transition-colors duration-200">
+                    Pitch Deck Tools
+                  </button>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">For Investors</h4>
               <ul className="space-y-3 text-gray-400 dark:text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Deal Flow</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Analytics Dashboard</a></li>
+                <li>
+                  <button onClick={() => handleNavigation('/deal-flow')} className="hover:text-white transition-colors duration-200">
+                    Deal Flow
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleNavigation('/analytics-dashboard')} className="hover:text-white transition-colors duration-200">
+                    Analytics Dashboard
+                  </button>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-3 text-gray-400 dark:text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors duration-200">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Contact</a></li>
+                <li>
+                  <button onClick={() => handleNavigation('/about')} className="hover:text-white transition-colors duration-200">
+                    About
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleNavigation('/blog')} className="hover:text-white transition-colors duration-200">
+                    Blog
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleNavigation('/contact')} className="hover:text-white transition-colors duration-200">
+                    Contact
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
